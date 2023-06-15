@@ -10,6 +10,9 @@
     "@types/node": "^16.18.36",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
+    "axios": "^1.4.0",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -39,5 +42,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "@types/styled-components": "^5.1.26",
+    "styled-components": "^5.3.10"
+  },
+  "proxy": "http://localhost:5000"
 }
