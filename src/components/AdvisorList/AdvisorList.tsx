@@ -1,26 +1,15 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import styled from 'styled-components';
 import FiltersList from "../FiltersList/FiltersList";
 import axios from "axios";
+import {AdvisorCard, Container} from "./styles";
+import {Advisor} from "./types";
+import { API_DELAY } from "../../constants";
 
 
-const API_DELAY = 2000; // Имитация задержки ответа сервера
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-`;
-
-const AdvisorCard = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 16px;
-  margin-bottom: 16px;
-`;
 
 const AdvisorList: React.FC = () => {
-    const [advisors, setAdvisors] = useState<any[]>([]);
-    const [filteredAdvisors, setFilteredAdvisors] = useState<any[]>(advisors);
+    const [advisors, setAdvisors] = useState<Advisor[]>([]);
+    const [filteredAdvisors, setFilteredAdvisors] = useState<Advisor[]>(advisors);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [filterStatus, setFilterStatus] = useState<string | null>(null);
     const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
@@ -59,6 +48,12 @@ const AdvisorList: React.FC = () => {
         }
     }, [])
 
+    const handleSortClick = () => {
+        setSortOrder((prevSortOrder) =>
+            prevSortOrder === 'asc' ? 'desc' : 'asc'
+        );
+    };
+
     const sortAdvisors = useCallback(() => {
         const sortedAdvisors = [...advisors];
         sortedAdvisors.sort((a, b) => {
@@ -71,6 +66,13 @@ const AdvisorList: React.FC = () => {
         setFilteredAdvisors(sortedAdvisors);
     }, [advisors, sortOrder]);
 
+    const handleFilterChange = (filterType: string , selectedValue: string | null) => {
+        if (filterType === 'status') {
+            setFilterStatus(selectedValue);
+        } else if (filterType === 'language') {
+            setFilterLanguage(selectedValue);
+        }
+    };
 
     const filterAdvisors = useCallback(() => {
         let filteredData = advisors;
@@ -87,20 +89,6 @@ const AdvisorList: React.FC = () => {
         setFilteredAdvisors(filteredData);
     }, [advisors, filterStatus, filterLanguage]);
 
-
-    const handleSortClick = () => {
-        setSortOrder((prevSortOrder) =>
-            prevSortOrder === 'asc' ? 'desc' : 'asc'
-        );
-    };
-
-    const handleFilterChange = (filterType: string , selectedValue: string | null) => {
-        if (filterType === 'status') {
-            setFilterStatus(selectedValue);
-        } else if (filterType === 'language') {
-            setFilterLanguage(selectedValue);
-        }
-    };
 
     useEffect(() => {
         sortAdvisors();
@@ -120,15 +108,15 @@ const AdvisorList: React.FC = () => {
                 handleFilterChange={handleFilterChange}
             />
 
-            {advisors.length === 0 ? (
+            {filteredAdvisors.length === 0 ? (
                 <p>Loading...</p>
             ) :
                 (filteredAdvisors.map((advisor) => (
                 <AdvisorCard key={advisor.id}>
                     <h3>{advisor.name}</h3>
-                    <p>Status: {advisor.status}</p>
-                    <p>Languages: {advisor.languages.join(", ")}</p>
-                    <p>Reviews: {advisor.reviews}</p>
+                    <p><span>Status:</span> {advisor.status}</p>
+                    <p><span>Languages:</span> {advisor.languages.join(", ")}</p>
+                    <p><span>Reviews:</span> {advisor.reviews}</p>
                 </AdvisorCard>
             )))}
         </Container>

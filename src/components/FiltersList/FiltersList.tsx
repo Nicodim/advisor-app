@@ -6,6 +6,8 @@ const FilterListBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
 `;
 
 interface FiltersListProps {
@@ -30,7 +32,7 @@ const FiltersList: React.FC<FiltersListProps> = ({
                     handleFilterChange('status', selectedValue)
                 }
                 options={['Online', 'Offline']}
-                label={'Filter by Status:'}
+                label={'Filter by Status'}
             />
 
             <FilterSelect
@@ -39,7 +41,7 @@ const FiltersList: React.FC<FiltersListProps> = ({
                     handleFilterChange('language', selectedValue)
                 }
                 options={['English', 'Spanish', 'French', 'German']}
-                label={'Filter by Language:'}
+                label={'Filter by Language'}
             />
         </FilterListBox>
     );
