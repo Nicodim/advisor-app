@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import styled from 'styled-components';
-import { fetchData } from "../../api";
 import FiltersList from "../FiltersList/FiltersList";
+import axios from "axios";
 
 
-const API_DELAY = 1000; // Имитация задержки ответа сервера
+const API_DELAY = 2000; // Имитация задержки ответа сервера
 
 const Container = styled.div`
   max-width: 800px;
@@ -24,17 +24,40 @@ const AdvisorList: React.FC = () => {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [filterStatus, setFilterStatus] = useState<string | null>(null);
     const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState(1)
+    const [fetching, setFetching] = useState(true)
     console.log('filteredAdvisors', filteredAdvisors)
 
     useEffect(() => {
-        const getData = async () => {
-            const data = await fetchData();
-            setAdvisors(data);
-        };
+        if (fetching) {
+            setTimeout(() => {
+                axios.get(`/api/advisors?limit=20&=${currentPage}`)
+                    .then(response => {
+                        setAdvisors([...advisors, ...response.data])
+                        setCurrentPage(prevState => prevState + 1)
+                    })
+                    .finally(() => setFetching(false))
+            }, API_DELAY);
+        }
+    }, [fetching]);
 
-        getData();
-    }, []);
 
+    const scrollHandler = () => {
+        const isScrolledToBottom =
+            document.documentElement.scrollHeight -
+            (window.innerHeight + document.documentElement.scrollTop) <
+            100;
+        if(isScrolledToBottom) {
+            setFetching(true)
+        }
+    }
+
+    useEffect(() => {
+    document.addEventListener('scroll', scrollHandler)
+        return function () {
+        document.removeEventListener('scroll', scrollHandler)
+        }
+    }, [])
 
     const sortAdvisors = useCallback(() => {
         const sortedAdvisors = [...advisors];

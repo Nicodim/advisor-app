@@ -8,20 +8,19 @@ const FilterListBox = styled.div`
   align-items: center;
 `;
 
-interface FilterBoxProps {
+interface FiltersListProps {
     filterStatus: string | null;
     filterLanguage: string | null;
     handleSortClick: () => void;
     handleFilterChange: (filterType: string, selectedValue: string | null) => void;
 }
 
-
-const FilterList: React.FC<FilterBoxProps> = ({
-                                                 filterStatus,
-                                                 filterLanguage,
-                                                 handleSortClick,
-                                                  handleFilterChange
-                                             }) => {
+const FiltersList: React.FC<FiltersListProps> = ({
+                                                     filterStatus,
+                                                     filterLanguage,
+                                                     handleSortClick,
+                                                     handleFilterChange,
+                                                 }) => {
     return (
         <FilterListBox>
             <SortButton onClick={handleSortClick}>Sort by Reviews</SortButton>
@@ -42,9 +41,8 @@ const FilterList: React.FC<FilterBoxProps> = ({
                 options={['English', 'Spanish', 'French', 'German']}
                 label={'Filter by Language:'}
             />
-
         </FilterListBox>
     );
 };
 
-export default FilterList;
+export default FiltersList;
