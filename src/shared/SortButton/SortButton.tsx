@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
 
 const SortButtonContainer = styled.button`
@@ -17,7 +17,7 @@ interface SortButtonProps {
     onClick: () => void;
     children : string;
 }
-const SortButton: React.FC<SortButtonProps> = ({  onClick, children  }) => (
+const SortButton:FC<SortButtonProps> = ({  onClick, children  }) => (
     <SortButtonContainer onClick={onClick}>
         {children }
     </SortButtonContainer>
