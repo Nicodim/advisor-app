@@ -16,7 +16,6 @@ const AdvisorList: React.FC = () => {
     const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1)
     const [fetching, setFetching] = useState(true)
-    console.log('filteredAdvisors', filteredAdvisors)
 
     useEffect(() => {
         if (fetching) {
@@ -99,7 +98,6 @@ const AdvisorList: React.FC = () => {
         filterAdvisors();
     }, [filterStatus, filterLanguage, filterAdvisors]);
 
-    console.log('filterLanguage', filterLanguage)
     return (
         <Container>
             <FiltersList
