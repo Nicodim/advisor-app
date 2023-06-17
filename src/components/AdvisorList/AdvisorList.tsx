@@ -4,6 +4,7 @@ import axios from "axios";
 import {AdvisorCard, Container} from "./styles";
 import {Advisor} from "./types";
 import { API_DELAY } from "../../constants";
+import Loader from "../../shared/Loader/Loader";
 
 
 
@@ -108,9 +109,10 @@ const AdvisorList: React.FC = () => {
                 handleFilterChange={handleFilterChange}
             />
 
-            {filteredAdvisors.length === 0 ? (
-                <p>Loading...</p>
-            ) :
+            {filteredAdvisors.length === 0 ?
+                (
+                    <Loader/>
+                ) :
                 (filteredAdvisors.map((advisor) => (
                 <AdvisorCard key={advisor.id}>
                     <h3>{advisor.name}</h3>
