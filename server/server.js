@@ -18,12 +18,12 @@ const generateAdvisors = (count) => {
 
         advisors.push(advisor);
     }
-    console.log(JSON.stringify(advisors, null, 2)); // Вывод фейковых данных в консоль
+    console.log(JSON.stringify(advisors, null, 2));
     return advisors;
 };
 
 app.get('/api/advisors', (req, res) => {
-    const advisors = generateAdvisors(20); // Генерация 20 советников (вы можете настроить количество)
+    const advisors = generateAdvisors(20);
 
     res.json(advisors);
 });

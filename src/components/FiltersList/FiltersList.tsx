@@ -1,21 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { SortButton, FilterSelect } from '../../shared';
+import {FilterListBox} from "./styles";
+import {FiltersListProps} from "./types";
 
-const FilterListBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8px;
-  margin-bottom: 8px;
-`;
 
-interface FiltersListProps {
-    filterStatus: string | null;
-    filterLanguage: string | null;
-    handleSortClick: () => void;
-    handleFilterChange: (filterType: string, selectedValue: string | null) => void;
-}
 
 const FiltersList: React.FC<FiltersListProps> = ({
                                                      filterStatus,
